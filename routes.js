@@ -1,4 +1,20 @@
 function routes(app, db, accounts, contactList) {
+  app.post('/register', (req,res)=>{
+      let email = req.body.email
+      let idd = shortid.generate()
+      if(email){
+          db.findOne({email}, (err, doc)=>{
+              if(doc){
+                  res.status(400).json({"status":"Failed", "reason":"Already registered"})
+              }else{
+                  db.insertOne({email})
+                  res.json({"status":"success","id":idd})
+              }
+          })
+      }else{
+          res.status(400).json({"status":"Failed", "reason":"wrong input"})
+      }
+  });
 	app.get('/contacts', async (request, response) => {
 		let cache = [];
 		const COUNTER = await contactList.methods.count().call();
