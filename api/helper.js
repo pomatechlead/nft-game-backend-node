@@ -1,5 +1,3 @@
-var url = require('url');
-
 function helperApi(app, db, accounts, helperContract) {
     app.get('/getHouseDetails/:id', async (req, res) => {
         const id = req.params.id;
