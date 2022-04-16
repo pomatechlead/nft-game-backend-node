@@ -1,48 +1,9 @@
-function routes(app, db, accounts, gameContract) {
-    app.post('/login', (req,res)=>{
-        let email = req.body.email
-        if(email){
-            db.findOne({email}, (err, doc)=>{
-                if(doc){
-                    res.json({"status":"success","id":doc.id})
-                }else{
-                    res.status(400).json({"status":"Failed", "reason":"Not recognised"})
-                }
-            })
-        }else{
-            res.status(400).json({"status":"Failed", "reason":"wrong input"})
-        }
-    });
+const authApi = require('./api/auth');
+const helperApi = require('./api/helper');
 
-    app.post('/register', (req,res)=>{
-        let email = req.body.email
-        let idd = shortid.generate()
-        if(email){
-            db.findOne({email}, (err, doc)=>{
-                if(doc){
-                    res.status(400).json({"status":"Failed", "reason":"Already registered"})
-                }else{
-                    db.insertOne({email})
-                    res.json({"status":"success","id":idd})
-                }
-            })
-        }else{
-            res.status(400).json({"status":"Failed", "reason":"wrong input"})
-        }
-    });
-  
-    app.get('/contacts', async (request, response) => {
-        let cache = [];
-        const COUNTER = await gameContract.methods.count().call();
-
-        for (let i = 1; i <= COUNTER; i++) {
-            const contact = await gameContract.methods.contacts(i).call();
-            cache = [...cache, contact];
-        }
-
-        response.json(cache);
-    });
-
+function routes(app, db, accounts, gameContract, houseContract, helperContract) {
+    authApi(app, db, accounts);
+    helperApi(app, db, accounts, helperContract);
 }
 
 module.exports = routes
