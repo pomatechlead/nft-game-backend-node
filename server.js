@@ -7,6 +7,7 @@ const mongodb = require('mongodb').MongoClient;
 const contract = require('@truffle/contract');
 const gameArtifacts = require('./build/contracts/Game.json');
 const houseArtifacts = require('./build/contracts/HouseNFT.json');
+const helperArtifacts = require('./build/contracts/Helper.json');
 const CONFIG = require('./config');
 
 app.use(cors());
@@ -29,11 +30,11 @@ mongodb.connect('mongodb://127.0.0.1:27017/lsnft_backend',
 	const db =client.db('Cluster0');
 	const accounts = await web3.eth.getAccounts();
 	const gameContract = new web3.eth.Contract(gameArtifacts.abi, CONFIG.GAME_ADDRESS);
-	const houseContract = new web3.eth.Contract(gameArtifacts.abi, CONFIG.HOUSE_ADDRESS);
+	const houseContract = new web3.eth.Contract(houseArtifacts.abi, CONFIG.HOUSE_ADDRESS);
+	const helperContract = new web3.eth.Contract(helperArtifacts.abi, CONFIG.HELPER_ADDRESS);
 	
 	routes(app, db, accounts, gameContract);
 	app.listen(process.env.PORT || 3001, () => {
 		console.log('listening on port '+ (process.env.PORT || 3001));
 	});
 });
- 
