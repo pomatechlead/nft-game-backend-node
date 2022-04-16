@@ -29,9 +29,11 @@ mongodb.connect('mongodb://127.0.0.1:27017/lsnft_backend',
 	const db =client.db('Cluster0');
 	const accounts = await web3.eth.getAccounts();
 	const gameContract = new web3.eth.Contract(gameArtifacts.abi, CONFIG.GAME_ADDRESS);
+	const houseContract = new web3.eth.Contract(gameArtifacts.abi, CONFIG.HOUSE_ADDRESS);
 	
 	routes(app, db, accounts, gameContract);
 	app.listen(process.env.PORT || 3001, () => {
 		console.log('listening on port '+ (process.env.PORT || 3001));
 	});
 });
+ 
