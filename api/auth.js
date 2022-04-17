@@ -1,4 +1,4 @@
-function authApi(app, db, accounts, gameContract, houseContract, helperContract) {
+function authApi(app, db, account, gameContract, houseContract, helperContract) {
     app.post('/login', (req,res)=>{
         let email = req.body.email
         if(email){

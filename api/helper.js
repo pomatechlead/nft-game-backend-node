@@ -1,4 +1,4 @@
-function helperApi(app, db, accounts, helperContract) {
+function helperApi(app, db, account, helperContract) {
     app.get('/getHouseDetails/:id', async (req, res) => {
         const id = req.params.id;
         const data = await helperContract.methods.getHouseDetails(id).call();
