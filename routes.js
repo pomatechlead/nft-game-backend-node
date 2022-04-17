@@ -7,7 +7,7 @@ function routes(app, db, accounts, gameContract, houseContract, helperContract) 
     authApi(app, db, accounts[0]);
     helperApi(app, db, accounts[0], helperContract);
     houseApi(app, db, accounts[0], houseContract);
-    gameApi(app, db, accounts[0], gameContract);
+    gameApi(app, db, accounts[0], gameContract, houseContract);
 }
 
 module.exports = routes
