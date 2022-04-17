@@ -6,7 +6,7 @@ function gameApi(app, db, account, gameContract) {
         res.json(data);
     });
 
-    app.post('/activateHouse', (req,res)=>{
+    app.post('/activateHouse', async (req,res) => {
         const tokenId = req.body.tokenId;
         const user = req.body.user;
         const data = await gameContract.methods.getOwnerAndStatus(tokenId).call();
