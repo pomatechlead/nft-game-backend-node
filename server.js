@@ -5,6 +5,7 @@ const routes = require('./routes');
 const Web3 = require('web3');
 const mongodb = require('mongodb').MongoClient;
 const contract = require('@truffle/contract');
+const lsHelpers = require('./helpers/lsHelpers');
 const gameArtifacts = require('./build/contracts/Game.json');
 const houseArtifacts = require('./build/contracts/HouseNFT.json');
 const helperArtifacts = require('./build/contracts/Helper.json');
@@ -32,6 +33,7 @@ mongodb.connect('mongodb://127.0.0.1:27017/lsnft_backend',
 	// set accounts
 	const privateKey = CONFIG.PRIVATE_KEY;
 	const account = await web3.eth.accounts.privateKeyToAccount('0x'+ privateKey);
+	console.log(lsHelpers.getName());
 	
 	// set contract wit abi
 	const gameContract = new web3.eth.Contract(gameArtifacts.abi, CONFIG.GAME_ADDRESS);
