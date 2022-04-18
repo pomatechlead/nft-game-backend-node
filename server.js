@@ -10,6 +10,7 @@ const gameArtifacts = require('./build/contracts/Game.json');
 const houseArtifacts = require('./build/contracts/HouseNFT.json');
 const helperArtifacts = require('./build/contracts/Helper.json');
 const CONFIG = require('./config');
+require('dotenv').config();
 
 app.use(cors());
 app.use(express.json());
@@ -31,9 +32,8 @@ mongodb.connect('mongodb://127.0.0.1:27017/lsnft_backend',
 	const db =client.db('Cluster0');
 
 	// set accounts
-	const privateKey = CONFIG.PRIVATE_KEY;
+	const privateKey = process.env.PRIVATE_KEY;
 	const account = await web3.eth.accounts.privateKeyToAccount('0x'+ privateKey);
-	console.log(lsHelpers.getName());
 	
 	// set contract wit abi
 	const gameContract = new web3.eth.Contract(gameArtifacts.abi, CONFIG.GAME_ADDRESS);

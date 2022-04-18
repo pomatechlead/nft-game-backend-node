@@ -1,4 +1,4 @@
-const CONFIG = require('../config');
+require('dotenv').config();
 
 function gameApi(app, db, account, gameContract, houseContract) {
     app.get('/getResource/:id', async (req, res) => {
@@ -28,7 +28,7 @@ function gameApi(app, db, account, gameContract, houseContract) {
             .activateHouse(tokenId)
             .send({ 
                 from: account.address,
-                gas: CONFIG.GAS,
+                gas: process.env.GAS,
              })
             .on("receipt", async (receipt) => {
                 return res.status(400).json({"status": "success", "reason": "House activated!"});
