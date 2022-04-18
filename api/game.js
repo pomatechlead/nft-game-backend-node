@@ -1,3 +1,5 @@
+const CONFIG = require('../config');
+
 function gameApi(app, db, account, gameContract, houseContract) {
     app.get('/getResource/:id', async (req, res) => {
         const id = req.params.id;
@@ -24,7 +26,10 @@ function gameApi(app, db, account, gameContract, houseContract) {
 
         await gameContract.methods
             .activateHouse(tokenId)
-            .send({ from: account })
+            .send({ 
+                from: account.address,
+                gas: CONFIG.GAS,
+             })
             .on("receipt", async (receipt) => {
                 res.status(400).json({"status": "success", "reason": "House activated!"});
             })

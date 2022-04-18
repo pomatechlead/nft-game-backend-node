@@ -28,12 +28,17 @@ mongodb.connect('mongodb://127.0.0.1:27017/lsnft_backend',
 		useUnifiedTopology: true,
 	}, async (err, client) => {
 	const db =client.db('Cluster0');
-	const accounts = await web3.eth.getAccounts();
+
+	// set accounts
+	const privateKey = CONFIG.PRIVATE_KEY;
+	const account = await web3.eth.accounts.privateKeyToAccount('0x'+ privateKey);
+	
+	// set contract wit abi
 	const gameContract = new web3.eth.Contract(gameArtifacts.abi, CONFIG.GAME_ADDRESS);
 	const houseContract = new web3.eth.Contract(houseArtifacts.abi, CONFIG.HOUSE_ADDRESS);
 	const helperContract = new web3.eth.Contract(helperArtifacts.abi, CONFIG.HELPER_ADDRESS);
 	
-	routes(app, db, accounts, gameContract, houseContract, helperContract);
+	routes(app, db, account, gameContract, houseContract, helperContract);
 	app.listen(process.env.PORT || 3001, () => {
 		console.log('listening on port '+ (process.env.PORT || 3001));
 	});
